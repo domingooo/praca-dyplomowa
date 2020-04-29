@@ -1,9 +1,14 @@
 {
-  "name": "socket-chat-example",
+  "name": "Rejestrator",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "Praca magisterska",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "express": "^4.15.2",
+    "express-session": "^1.17.0",
+    "md5": "^2.2.1",
+    "mysql": "^2.18.1",
+    "node-schedule": "^1.3.2",
     "socket.io": "^1.7.3"
   },
   "scripts": {
