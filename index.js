@@ -287,7 +287,7 @@ io.on('connection', function (socket) {			//nowy dashboard łączy się z websoc
 //SERWER UDP - DO ARDUINO
 var activeSockets=[];
 var PORT = 3333;
-var HOST = '192.168.0.101';
+var HOST = 'https://rejestrator-app.herokuapp.com/';
 
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
