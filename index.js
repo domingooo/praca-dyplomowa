@@ -54,7 +54,7 @@ function handleDisconnect() {
 handleDisconnect();
 
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 5000;
 
 app.use(express.static('public'))
 app.use(session({
@@ -252,7 +252,7 @@ app.post('/login.html', function(request, response) {
 
 
 
-server.listen(80);
+server.listen(5000);
 
 io.on('connection', function (socket) {			//nowy dashboard łączy się z websocketem i dostaje tablice aktywnych urządzeń
 	var tempTab=[];
