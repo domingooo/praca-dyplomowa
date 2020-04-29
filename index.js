@@ -252,7 +252,7 @@ app.post('/login.html', function(request, response) {
 
 
 
-server.listen(3000);
+server.listen(8080);
 
 io.on('connection', function (socket) {			//nowy dashboard łączy się z websocketem i dostaje tablice aktywnych urządzeń
 	var tempTab=[];
