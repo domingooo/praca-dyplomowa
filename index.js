@@ -53,7 +53,7 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-
+var address = process.env.IP;
 var port = process.env.PORT || 3000;
 
 app.use(express.static('public'))
@@ -287,7 +287,7 @@ io.on('connection', function (socket) {			//nowy dashboard łączy się z websoc
 //SERWER UDP - DO ARDUINO
 var activeSockets=[];
 var PORT = 3333;
-var HOST = '52.215.119.172';
+var HOST = address;
 
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
