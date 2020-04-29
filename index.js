@@ -282,7 +282,7 @@ io.on('connection', function (socket) {			//nowy dashboard łączy się z websoc
 	
 
 //====================================================================================
-/*
+
 
 //SERWER UDP - DO ARDUINO
 var activeSockets=[];
@@ -366,7 +366,7 @@ server.on('message', function(message, remote) {	//przyszła paczka danych od ar
 
 server.bind(PORT, HOST);
 
-*/
+
 
 function ab2str(buf) {
   return String.fromCharCode.apply(null, new Uint16Array(buf));
