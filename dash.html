@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pl">
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Projekt pracy magisterskiej">
+  <meta name="author" content="Dominik Mazurkiewicz">
 
   <title>Panel Obsługi - Dashboard</title>
 
@@ -80,6 +78,7 @@
             <h6 class="collapse-header">Metody diagnostyczne:</h6>
             <a class="collapse-item" href="vibra.html">Pomiar wibracji</a>
 			<a class="collapse-item" href="dailyStats.html">Trendy parametrów el.</a>
+			<a class="collapse-item" href="fft.html">FFT</a>
           </div>
         </div>
       </li>
@@ -163,7 +162,7 @@
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="search" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
                   </div>
                 </form>
               </div>
@@ -195,7 +194,7 @@
                 </a>
 				
 				</div>
-                <a class="dropdown-item text-center small text-gray-500" href="/alerts">Zobasz hostorię zgłoszeń</a>
+                <a class="dropdown-item text-center small text-gray-500" href="/alerts.html">Zobasz hostorię zgłoszeń</a>
               </div>
             </li>
 
@@ -270,12 +269,6 @@
 						  <td>-</td>
 						</tr>
 						<tr>
-						  <th scope="row"> Wsp. mocy cos(φ)</th>
-						  <td>-</td>
-						  <td>-</td>
-						  <td>-</td>
-						</tr>
-						<tr>
 						  <th scope="row"> Moc czynna P [W]</th>
 						  <td>-</td>
 						  <td>-</td>
@@ -289,6 +282,12 @@
 						</tr>
 						<tr>
 						  <th scope="row"> Moc pozorna S [VA]</th>
+						  <td>-</td>
+						  <td>-</td>
+						  <td>-</td>
+						</tr>
+						<tr>
+						  <th scope="row"> Wsp. mocy cos(φ)</th>
 						  <td>-</td>
 						  <td>-</td>
 						  <td>-</td>
@@ -320,7 +319,7 @@
 						</div>
 						<div style="padding: 1rem 1.35rem;">
 							<img class="card-img-top mr-4" style="width:2rem" src="https://image.flaticon.com/icons/svg/1843/1843703.svg" alt="...">
-							Przyspieszenie drgań [mm/s<sup>2</sup>]
+							Przyspieszenie drgań [m/s<sup>2</sup>]
 						</div>
 						<div class=" card-footer d-flex align-items-center justify-content-between text-gray">
 							<div><i class="fas fa-angle-right"></i>X: <span id="accBox0">-</span></div>
@@ -519,6 +518,24 @@
     </div>
 </div>
 
+ 
+  <!-- DISCON Device Modal-->
+  <div class="modal fade" id="disconDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle1">Uwaga</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+			<img class="img-fluid px-3 px-sm-4 mx-auto mt-4 mb-3" style="width: 25rem;" src="img/discon.svg" alt="">
+            <div class="modal-body">
+				<p>Utracono połaczenie z urządzeniem!</p>
+				<p>W trybie offline podgląd parametrów w czasie rzeczywistym jest niedostępny.</p>
+				<p>Możesz przeglądać tę kartę w trybie offline lub opuścić ten dashboard.</p></div>
+            <div class="modal-footer"><button class="btn btn-secondary" type="button" data-dismiss="modal">Zamknij i zostań</button><button onclick="window.location.href='/index.html'" class="btn btn-primary" type="button">Strona główna</button></div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -604,6 +621,9 @@
 	socket.on('ArduinoConnect', function (data) {	//nowy nadajnik
 		data = JSON.parse(data);
 		addAlert(0,"Dołączyło nowe urządzenie!");
+		//sidebar
+		$("#collapseTwo").find("span").remove()
+		$("#collapseTwo").children().first().append('<a class="collapse-item" href="/dashboard?id='+data.id+'">Urządzenie ID: '+data.ardId+' </a>');
 	});
 	
 	socket.on( 'disconnect' , (reason) => { 
@@ -629,19 +649,33 @@
 	socket.on('ArduinoChangeStatus', function (data) {	//nadajnik zmienił status
 		data = JSON.parse(data);
 		
+		if(data.id==urlParam('id')){
+			if(data.active){
+			
+				$("#disconDevice").modal('hide');
+			
+			}else{
+			
+				$("#disconDevice").modal('show');
+			}
+		}
+		
 		addAlert(0,"Rejestrator zmienił status!");
 		
 	});
 
 	socket.on('newData', function (data) {	//nowa próbka danych
 		data = JSON.parse(data);
+		console.log(data);
 
 		if(data.length!=0){
 
 			var splited=data.mes.split("#");
 			var i = getIndexAS(data.mdid);
 	  
-			if(i!=-1){							//jak jest już w tablicy to dodawaj punkty do datasetów oraz odświeżaj w tablicy 10ciu
+			console.log(i);
+			console.log(splited);
+			if(i!=-1 && urlParam('id')==data.mdid){							//jak jest już w tablicy to dodawaj punkty do datasetów oraz odświeżaj w tablicy 10ciu
 			
 				var ldLen = splited.length;
 				for(iter=0;iter<ldLen;iter++){	//pętla przez 27 wartości
@@ -710,6 +744,8 @@
 		if(activeSockets==null ) activeSockets=data;
 		
 		if(data.length!=0){
+			$("#collapseTwo").find("span").remove();
+		
 			var i = getIndexAS(urlParam('id')); 
 
 			for(j=0;j<data[i].lastData.length;j++){						//pętla przez 10 wierszy
@@ -720,6 +756,11 @@
 				for(iter=0;iter<ldLen;iter++)	//pętla przez 27 wartości
 					ds[iter].push({x:parseInt(data[i].lastData[j][0]),y:parseFloat(data[i].lastData[j][iter])});
 				
+			}
+			
+			for (var ig = 0; ig < data.length; ig++) {
+				//menu sidebar
+				$("#collapseTwo").children().first().append('<a class="collapse-item" href="/dashboard?id='+data[ig].id+'">Urządzenie ID: '+data[ig].ardId+' </a>');
 			}
 			
 			var start = parseInt($("#cardPillVertical").children().find(".active").attr("aria-controls"));

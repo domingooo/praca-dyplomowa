@@ -128,11 +128,11 @@ function initHighChart(seriesSetting) {
                 events: {		
 					afterSetExtremes: showDataLabels
                 },
-                minRange: 3600 * 1000 // one hour
+                minRange: 300 * 1000 // one hour
             },
 
             yAxis: {
-                floor: 0
+
             },
 			legend: {
 				enabled: true,

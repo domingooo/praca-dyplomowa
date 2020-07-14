@@ -32,12 +32,12 @@
 					type:'post',
 					data:{username:username,password:password},
 					success: function(data) {
-						$("#message").html("ok!");
+						$("#message").html("Pomyślnie zalogowano!");
 						setTimeout(function() {
 						  window.location.href = data
 						}, 700)},
 					error:function(res){
-						$("#message").html("coś poszło nie tak...");
+						$("#message").html("Wprowadź poprawne dane!");
 					}
 					
 				});
@@ -80,7 +80,7 @@
                         <label class="custom-control-label" for="customCheck">Zapamiętaj dane logowania</label>
                       </div>
                     </div>
-                    <a style="cursor: pointer;" id="but_submit" class="btn btn-primary btn-user btn-block">
+                    <a style="cursor: pointer;" id="but_submit" class="btn btn-primary btn-user text-white-50 btn-block">
                       Login
                     </a>
                   </form>

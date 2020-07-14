@@ -1,5 +1,5 @@
 var labele = ["Timestamp", "ID", "Prąd IL1", "Prąd IL2", "Prąd IL3", "Temperatura", "Napięcie UL1", "Napięcie UL2", "Napięcie UL3", "Moc PL1", "Moc PL2", "Moc PL3", "Moc QL1", "Moc QL2", "Moc QL3", "Moc SL1", "Moc SL2", "Moc SL3", "cos φ L1", "cos φ L2", "cos φ L3", "Energia L1", "Energia L2", "Energia L3", "Przysp X", "Przysp Y", "Przysp Z"];
-SocketAddress='192.168.0.101';
+SocketAddress=''; // ! 
 
 function prepCard(dev){
 	var txt='';
@@ -15,7 +15,7 @@ function prepCard(dev){
 		txtStatus='Aktywne';
 		onoff='on';
 		lastonline='Teraz';
-		join=getDateStr(dev.joinTimestamp).time;
+		join=getDateStr(dev.joinTimestamp).day+", "+getDateStr(dev.joinTimestamp).time;
 		
 	}else{
 		border='secondary';
@@ -33,7 +33,7 @@ function prepCard(dev){
 					<div class="card-body"> \
 						<h5 class="card-title text-primary">Urządzenie ID: '+dev.ardId+'</h5> \
 						<p class="card-text mb-0">IP: <span class="pl-2">'+dev.ip+' ('+dev.port+')</span></p> \
-						<p data-toggle="tooltip" title="Hooray!" class="card-text mb-0">Status: <span class="pl-2 text-'+border+'">'+txtStatus+'</span></p> \
+						<p class="card-text mb-0">Status: <span class="pl-2 text-'+border+'">'+txtStatus+'</span></p> \
 						<p class="card-text mb-0">Dołączyło: <span class="pl-2">'+join+'</span></p> \
 						<p class="card-text mb-0">Ostatnio online: <span class="pl-2">'+lastonline+'</span></p> \
 					</div> \
@@ -316,7 +316,7 @@ function checkMobile(){
 				//usuwanie pustych wierszy
 				if(splited[0]=="") splited.shift();
 				if(splited[splited.length-1]=="") splited.splice(-1,1);
-				
+				//console.log(splited);
 				//split wierszy
 				for(j=0;j<splited.length;j++){
 					splited[j]=splited[j].split("#");
@@ -333,6 +333,9 @@ function checkMobile(){
 						for(k=1;k<splited[j].length;k++)				//pętla na konwersję do zmiennoprzecinkowych na potrzeby hCh				
 							splited[j][k]=parseFloat(splited[j][k]);
 						
+					}else if(dest=="fftlog"){
+						
+						splited[j][0]=getDateStr(parseInt(splited[j][0])).date+" \xa0\xa0\xa0 "+getDateStr(parseInt(splited[j][0])).full;	
 					}
 					
 				}

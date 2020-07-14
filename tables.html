@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pl">
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Projekt pracy magisterskiej">
+  <meta name="author" content="Dominik Mazurkiewicz">
 
   <title>Panel obsługi - Tabele</title>
 
@@ -85,6 +83,7 @@
             <h6 class="collapse-header">Metody diagnostyczne:</h6>
             <a class="collapse-item" href="vibra.html">Pomiar wibracji</a>
 			<a class="collapse-item" href="dailyStats.html">Trendy parametrów el.</a>
+			<a class="collapse-item" href="fft.html">FFT</a>
           </div>
         </div>
       </li>
@@ -168,7 +167,7 @@
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="search" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
                   </div>
                 </form>
               </div>
@@ -200,7 +199,7 @@
                 </a>
 				
 				</div>
-                <a class="dropdown-item text-center small text-gray-500" href="/alerts">Zobasz hostorię zgłoszeń</a>
+                <a class="dropdown-item text-center small text-gray-500" href="/alerts.html">Zobasz hostorię zgłoszeń</a>
               </div>
             </li>
 
@@ -230,7 +229,15 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Tabele</h1>
+			<div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
+				<div class="mr-4 mb-3 mb-sm-0">
+					<h1 class="mb-0">Tabele</h1>
+					<div class="small"><span class="font-weight-500 text-primary"></span> · </div>
+				</div>
+				<a href="/export.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Pobierz raport</a>
+			</div>
+			
+			
 			  <div class="card shadow mb-4">
 				<div class="card-header py-3">
 				  <h6 class="m-0 font-weight-bold text-primary">Wybierz plik </h6>

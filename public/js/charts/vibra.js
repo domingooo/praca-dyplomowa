@@ -114,7 +114,7 @@ function initChart(labels,ox,oy,oz){
 			  padding: 10,
 			  // Include a dollar sign in the ticks
 			  callback: function(value, index, values) {
-				return number_format(value)+'mm/s^2';
+				return number_format(value)+'m/s^2';
 			  }
 			},
 			gridLines: {
@@ -146,7 +146,7 @@ function initChart(labels,ox,oy,oz){
 		  callbacks: {
 			label: function(tooltipItem, chart) {
 			  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-			  return datasetLabel + ': ' + tooltipItem.yLabel+'mm/s^2';
+			  return datasetLabel + ': ' + tooltipItem.yLabel+'m/s^2';
 			}
 		  }
 		}

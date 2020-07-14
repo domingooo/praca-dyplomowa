@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pl">
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Projekt pracy magisterskiej">
+  <meta name="author" content="Dominik Mazurkiewicz">
 
   <title>Panel Obsługi - Pomiar wibracji</title>
 
@@ -79,6 +77,7 @@
             <h6 class="collapse-header">Metody diagnostyczne:</h6>
             <a class="collapse-item" href="vibra.html">Pomiar wibracji</a>
 			<a class="collapse-item" href="dailyStats.html">Trendy parametrów el.</a>
+			<a class="collapse-item" href="fft.html">FFT</a>
           </div>
         </div>
       </li>
@@ -162,7 +161,7 @@
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="search" class="form-control bg-light border-0 small" placeholder="Szukaj..." aria-label="Search" aria-describedby="basic-addon2">
                   </div>
                 </form>
               </div>
@@ -194,7 +193,7 @@
                 </a>
 				
 				</div>
-                <a class="dropdown-item text-center small text-gray-500" href="/alerts">Zobasz hostorię zgłoszeń</a>
+                <a class="dropdown-item text-center small text-gray-500" href="/alerts.html">Zobasz hostorię zgłoszeń</a>
               </div>
             </li>
 
@@ -223,11 +222,13 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+          <!-- Page Heading -->
 			<div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
 				<div class="mr-4 mb-3 mb-sm-0">
-					<h1 class="mb-0 d-inline">Pomiar wibracji</h1>
+					<h1 class="mb-0">Pomiar wibracji</h1>
 					<div class="small"><span class="font-weight-500 text-primary"></span> · </div>
 				</div>
+				<a href="/export.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Pobierz raport</a>
 			</div>
 			
 			
@@ -278,12 +279,6 @@
 							</div>
 						</div>
 						<div class="tab-pane fade" id="activitiesPill" role="tabpanel" aria-labelledby="activities-pill">
-							
-							
-
-
-
-
 
 						<div class="card-deck">
                             <div class="card mb-4">
@@ -308,18 +303,6 @@
                                 </div>
                             </div>
 						  </div>
-
-
-
-
-
-
-
-
-
-
-
-
 						
 						</div>
 					</div>
@@ -454,9 +437,9 @@
 		
 		initChart(labele,ox,oy,oz);
 		
-		$("#box-ox").text(avg[0]+" mm/s^2");
-		$("#box-oy").text(avg[1]+" mm/s^2");
-		$("#box-oz").text(avg[2]+" mm/s^2");
+		$("#box-ox").text(avg[0]+" m/s^2");
+		$("#box-oy").text(avg[1]+" m/s^2");
+		$("#box-oz").text(avg[2]+" m/s^2");
 		
 		// procenty:
 		
